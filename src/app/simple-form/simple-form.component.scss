@@ -1,0 +1,12 @@
+input
+{
+  &.ng-invalid {
+    border-color: var(--bs-danger);
+  }
+  &.invalid {
+    border-color: var(--bs-danger) !important;
+  }
+  &.ng-valid {
+    border-color: var(--bs-success);
+  }
+}

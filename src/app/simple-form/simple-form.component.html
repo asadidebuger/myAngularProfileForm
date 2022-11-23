@@ -1,0 +1,39 @@
+<form (ngSubmit)="onSubmit(profileForm)" #profileForm="ngForm">
+
+  <fieldset >
+    <legend>Please enter profile information</legend>
+    <div class="mb-3">
+      <label for="fullname" class="form-label">Full Name</label>
+      <input #fullname="ngModel"  [(ngModel)]="profile.fullname" name="fullname" required type="text"  id="fullname" class="form-control" placeholder="Your Full Name">
+      <span *ngIf="fullname.errors" class="text-danger small">Please enter Your Full Name!</span>
+    </div>
+    <div class="mb-3">
+      <label for="username" class="form-label">User Name</label>
+      <input #username="ngModel"  [(ngModel)]="profile.username" name="username"  required type="text" id="username" class="form-control" placeholder="Your Username">
+      <span *ngIf="username.errors" class="text-danger small">Please enter Username!</span>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input #email="ngModel"  [(ngModel)]="profile.email" name="email"  required pattern="\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+" type="text" id="email" class="form-control" placeholder="Your Email">
+      <span *ngIf="email.errors?.['required']" class="text-danger small">Please enter your email!</span>
+      <span *ngIf="email.errors?.['pattern']" class="text-danger small"><b>{{email.value}}</b> is not a valid email!</span>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input #password="ngModel"  [(ngModel)]="profile.password" name="password"  required minlength="8" pattern="^(?:(?=.*[a-z])(?:(?=.*[A-Z])(?=.*[\d\W])|(?=.*\W)(?=.*\d))|(?=.*\W)(?=.*[A-Z])(?=.*\d)).{8,}$" type="password" id="password" class="form-control" placeholder="Choose a complex password">
+      <span *ngIf="password.errors?.['required']" class="text-danger small">Please enter a password!</span>
+      <span *ngIf="password.errors?.['minlength']" class="text-danger small">Min password length is 8 character!</span>
+      <span *ngIf="password.errors?.['pattern']" class="text-danger small">{{password.value}}Password is not complex!</span>
+    </div>
+    <div class="mb-3" *ngIf="!password.errors">
+      <label for="confirmPassword" class="form-label">Confirm Password</label>
+      <input #confirmPassword="ngModel"  [class.invalid]="password.value!==confirmPassword.value" [(ngModel)]="profile.confirmPassword" name="confirmPassword" required type="password" id="confirmPassword" class="form-control" placeholder="Repeat password">
+      <span *ngIf="confirmPassword.errors?.['required']" class="text-danger small">Please Confirm password!</span>
+      <span *ngIf="password.value!==confirmPassword.value" class="text-danger small">Confirm password is not matched!</span>
+    </div>
+
+    <button  [class.disabled]="!profileForm.valid" type="submit" class="btn btn-primary float-start">Submit</button>
+    <button type="button" class="btn btn-warning float-end" (click)="resetForm()" >Reset</button>
+  </fieldset>
+
+</form>
